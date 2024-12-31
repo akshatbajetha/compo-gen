@@ -75,4 +75,16 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+
+  .main-page {
+    min-height: 80vh;
+    max-height: 90vh;
+  }
+
+  .code-dark {
+    background-color: #212121;
+  }
+  .code-light {
+    background-color: #ffffff;
+  }
 }
