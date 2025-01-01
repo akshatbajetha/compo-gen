@@ -3,6 +3,9 @@ import { ToggleTheme } from "@/components/ToggleTheme";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { useState } from "react";
+import CompoGenLogo from "../public/images/CompoGenLogo.png";
+import Image from "next/image";
+import { Code2Icon } from "lucide-react";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +19,7 @@ const Navbar: React.FC = () => {
       <nav className="flex items-center justify-between p-4">
         <div className="flex items-center">
           <Link href="/">
-            <img src="/favicon.ico" alt="Logo" className="h-8 w-8" />
+            <Code2Icon size={40} />
           </Link>
         </div>
         <div className="hidden md:flex space-x-4">

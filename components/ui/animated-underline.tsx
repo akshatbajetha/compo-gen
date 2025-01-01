@@ -14,7 +14,7 @@ const AnimatedUnderline: React.FC<AnimatedUnderlineProps> = ({
     <span className="relative inline-block">
       <span>{children}</span>
       <motion.span
-        className="absolute left-0 bottom-0 w-full h-1 bg-indigo-500"
+        className="absolute left-0 bottom-0 w-full h-1 bg-blue-500"
         initial={{ width: 0 }}
         animate={{ width: "100%" }}
         transition={{ duration: 1, ease: "easeInOut", delay }}

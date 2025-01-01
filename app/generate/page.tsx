@@ -61,10 +61,10 @@ const Page = () => {
   // console.log(response);
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <div className="flex h-[90vh]">
-        <div className="w-1/3 p-6 h-full flex flex-col items-start justify-between">
+      <div className="flex-1 flex">
+        <div className="w-1/3 min-h-full p-6 flex flex-col justify-between">
           <div className="w-full h-5/6 flex justify-center items-center">
             <h1 className="text-2xl">Login to save the chats</h1>
           </div>
@@ -85,16 +85,16 @@ const Page = () => {
           </form>
         </div>
         <Separator orientation="vertical" />
-        <div className="w-2/3 h-full flex justify-center items-center">
-          <HeroHighlight>
+        <div className="w-2/3 min-h-full flex justify-center items-center">
+          <HeroHighlight containerClassName="h-full w-full">
             {submitted ? (
-              <div className="py-12 flex justify-center items-center flex-col">
+              <div className="py-12 flex justify-center items-center flex-col h-full">
                 {loading ? (
                   <div className="inline-block w-8 h-8 border-4 rounded-full">
                     <span className="visually-hidden">Loading...</span>
                   </div>
                 ) : (
-                  <div className="p-4">
+                  <div className="p-4 h-full">
                     <div className="flex mb-4">
                       <Button
                         className={`mr-1 py-2 rounded ${
@@ -140,7 +140,7 @@ const Page = () => {
           </HeroHighlight>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
