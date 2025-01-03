@@ -8,11 +8,10 @@ import Navbar from "../Navbar";
 import HeroSection from "../HeroSection";
 import { CodeIcon, CopyCheck, CopyIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { CodeBlock } from "@/components/ui/code-block";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
 
-const Page = () => {
+const Page = async () => {
   const { toast } = useToast();
   const [submitted, setSubmitted] = useState(false);
   const [response, setResponse] = useState<string>("");
