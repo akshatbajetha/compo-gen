@@ -13,6 +13,7 @@ import { HeroHighlight } from "@/components/ui/hero-highlight";
 import LoadingPage from "@/components/LoadingPage";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { useTheme } from "next-themes";
+import Footer from "@/components/Footer";
 
 const Page = () => {
   const { toast } = useToast();
@@ -70,70 +71,73 @@ const Page = () => {
   // console.log(response);
 
   return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden">
-      <Navbar />
-      <div className="flex-1 flex flex-col items-center justify-center">
-        <HeroHighlight containerClassName="flex-1 w-full">
-          <div className="w-screen flex justify-center items-center ">
-            {submitted ? (
-              <div className="py-12 flex justify-center items-center flex-col">
-                {loading ? (
-                  <div className="flex justify-center items-center h-full w-full">
-                    <Loader2 className="animate-spin" />
-                  </div>
-                ) : (
-                  <div className="p-4">
-                    <Sandpack
-                      theme={theme === "dark" ? "dark" : "light"}
-                      template="react"
-                      files={{
-                        [fileName]: {
-                          code: formattedCode,
-                          active: true,
-                        },
-                        "/App.js": {
-                          code: `import React from "react";\nimport ${componentName} from "./${fileName}";\n\nexport default function App() {\n  return <${componentName} />;\n
+    <>
+      <div className="flex flex-col min-h-screen overflow-x-hidden">
+        <Navbar />
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <HeroHighlight containerClassName="flex-1 w-full">
+            <div className="w-screen flex justify-center items-center ">
+              {submitted ? (
+                <div className="py-12 flex justify-center items-center flex-col">
+                  {loading ? (
+                    <div className="flex justify-center items-center h-full w-full">
+                      <Loader2 className="animate-spin" />
+                    </div>
+                  ) : (
+                    <div className="p-4">
+                      <Sandpack
+                        theme={theme === "dark" ? "dark" : "light"}
+                        template="react"
+                        files={{
+                          [fileName]: {
+                            code: formattedCode,
+                            active: true,
+                          },
+                          "/App.js": {
+                            code: `import React from "react";\nimport ${componentName} from "./${fileName}";\n\nexport default function App() {\n  return <${componentName} />;\n
 }`,
-                        },
-                      }}
-                      options={{
-                        externalResources: ["https://cdn.tailwindcss.com"],
-                        editorHeight: 600,
-                        wrapContent: true,
-                        showLineNumbers: true,
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
-            ) : (
-              <HeroSection />
-            )}
-          </div>
-          <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-4 w-full max-w-sm sm:max-w-md md:max-w-lg bg-background p-2 rounded-md z-50">
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-row items-center justify-center mb-1 w-full"
-            >
-              <textarea
-                name="prompt"
-                className="w-full mr-2 p-2 border border-gray-300 rounded resize-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Generate a hero section with title and subtitle"
-                onChange={(e) => setDefaultText(e.target.value)}
-                rows={1}
-                onInput={(e) => {
-                  const target = e.target as HTMLTextAreaElement;
-                  target.style.height = "auto";
-                  target.style.height = `${target.scrollHeight}px`;
-                }}
-              />
+                          },
+                        }}
+                        options={{
+                          externalResources: ["https://cdn.tailwindcss.com"],
+                          editorHeight: 600,
+                          wrapContent: true,
+                          showLineNumbers: true,
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <HeroSection />
+              )}
+            </div>
+            <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 mb-4 w-full max-w-sm sm:max-w-md md:max-w-lg bg-background p-2 rounded-md z-50">
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-row items-center justify-center mb-1 w-full"
+              >
+                <textarea
+                  name="prompt"
+                  className="w-full mr-2 p-2 border border-gray-300 rounded resize-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Generate a hero section with title and subtitle"
+                  onChange={(e) => setDefaultText(e.target.value)}
+                  rows={1}
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = "auto";
+                    target.style.height = `${target.scrollHeight}px`;
+                  }}
+                />
 
-              <ButtonBorder type="submit">Send</ButtonBorder>
-            </form>
-          </div>
-        </HeroHighlight>
+                <ButtonBorder type="submit">Send</ButtonBorder>
+              </form>
+            </div>
+          </HeroHighlight>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

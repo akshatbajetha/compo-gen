@@ -4,7 +4,6 @@ import { ToggleTheme } from "./ToggleTheme";
 import { useState } from "react";
 import GithubDark from "@/public/images/githubDark.png";
 import GithubLight from "@/public/images/githubLight.png";
-import BuyMeACoffee from "@/public/images/bmc.png";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
@@ -41,13 +40,6 @@ function NavItems() {
             alt="github"
             className="w-6 h-6"
           />
-        </a>
-        <a
-          className="flex items-center"
-          href="https://buymeacoffee.com/akshatbajetha"
-          target="_blank"
-        >
-          <Image src={BuyMeACoffee} alt="buymeacoffee" className="w-40 h-10" />
         </a>
       </div>
       <div className="md:hidden">
@@ -94,16 +86,6 @@ function NavItems() {
                 src={theme === "dark" ? GithubDark : GithubLight}
                 alt="github"
                 className="w-6 h-6"
-              />
-            </a>
-            <a
-              className="block px-4 py-2"
-              href="https://buymeacoffee.com/akshatbajetha"
-            >
-              <Image
-                src={BuyMeACoffee}
-                alt="buymeacoffee"
-                className="w-40 h-10"
               />
             </a>
           </div>
