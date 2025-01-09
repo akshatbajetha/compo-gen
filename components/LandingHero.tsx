@@ -11,12 +11,7 @@ function LandingHero() {
           CompoGen
         </Highlight>
         <p className="pt-14 text-3xl text-gray-600 dark:text-gray-300">
-          An All-in-One solution for developers to{" "}
-          <AnimatedUnderline>generate</AnimatedUnderline> and{" "}
-          <AnimatedUnderline>preview</AnimatedUnderline>{" "}
-          <AnimatedUnderline>web components</AnimatedUnderline>{" "}
-          <AnimatedUnderline>quickly</AnimatedUnderline> and{" "}
-          <AnimatedUnderline>easily</AnimatedUnderline>.
+          Generate and preview React components quickly and easily.
         </p>
         <Link href="/generate">
           <Button className="mt-10 h-14 bg-foreground text-background hover:bg-background hover:text-foreground">

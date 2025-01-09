@@ -7,7 +7,7 @@ interface AnimatedUnderlineProps {
 }
 
 const AnimatedUnderline: React.FC<AnimatedUnderlineProps> = ({
-  delay = 1.2,
+  delay = 0,
   children,
 }) => {
   return (

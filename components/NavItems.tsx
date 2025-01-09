@@ -2,10 +2,15 @@
 import Link from "next/link";
 import { ToggleTheme } from "./ToggleTheme";
 import { useState } from "react";
-import LogoutForm from "./LogoutForm";
+import GithubDark from "@/public/images/githubDark.png";
+import GithubLight from "@/public/images/githubLight.png";
+import BuyMeACoffee from "@/public/images/bmc.png";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 
 function NavItems() {
   const [isOpen, setIsOpen] = useState(false);
+  const { theme } = useTheme();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -26,14 +31,24 @@ function NavItems() {
         >
           Generate
         </Link>
-
-        <Link
-          href="/login"
-          className="flex items-center text-gray-800 dark:text-white hover:text-blue-500 dark:hover:text-blue-500"
+        <a
+          className="flex items-center"
+          href="https://github.com/akshatbajetha/compo-gen"
+          target="_blank"
         >
-          Login
-        </Link>
-        <LogoutForm />
+          <Image
+            src={theme === "light" ? GithubLight : GithubDark}
+            alt="github"
+            className="w-6 h-6"
+          />
+        </a>
+        <a
+          className="flex items-center"
+          href="https://buymeacoffee.com/akshatbajetha"
+          target="_blank"
+        >
+          <Image src={BuyMeACoffee} alt="buymeacoffee" className="w-40 h-10" />
+        </a>
       </div>
       <div className="md:hidden">
         <button
@@ -55,8 +70,10 @@ function NavItems() {
             />
           </svg>
         </button>
+
         {isOpen && (
-          <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg z-10">
+          <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg z-10 bg-background">
+            <ToggleTheme />
             <Link
               href="/"
               className="block px-4 py-2 text-gray-800 dark:text-white"
@@ -69,14 +86,26 @@ function NavItems() {
             >
               Generate
             </Link>
-
-            <Link
-              href="/login"
-              className="block px-4 py-2 text-gray-800 dark:text-white"
+            <a
+              className="block px-4 py-2"
+              href="https://github.com/akshatbajetha/compo-gen"
             >
-              Login
-            </Link>
-            <LogoutForm />
+              <Image
+                src={theme === "dark" ? GithubDark : GithubLight}
+                alt="github"
+                className="w-6 h-6"
+              />
+            </a>
+            <a
+              className="block px-4 py-2"
+              href="https://buymeacoffee.com/akshatbajetha"
+            >
+              <Image
+                src={BuyMeACoffee}
+                alt="buymeacoffee"
+                className="w-40 h-10"
+              />
+            </a>
           </div>
         )}
       </div>

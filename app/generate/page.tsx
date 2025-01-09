@@ -3,19 +3,24 @@ import { ButtonBorder } from "@/components/ui/moving-border";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, Suspense, useEffect, useState } from "react";
 import Navbar from "../Navbar";
 import HeroSection from "../HeroSection";
-import { CodeIcon, CopyCheck, CopyIcon } from "lucide-react";
+import { CodeIcon, CopyCheck, CopyIcon, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { CodeBlock } from "@/components/ui/code-block";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
+import LoadingPage from "@/components/LoadingPage";
+import { Sandpack } from "@codesandbox/sandpack-react";
+import { useTheme } from "next-themes";
 
-const Page = async () => {
+const Page = () => {
   const { toast } = useToast();
   const [submitted, setSubmitted] = useState(false);
+  const { theme } = useTheme();
   const [response, setResponse] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
+  const [componentName, setComponentName] = useState<string>("");
   const [language, setLanguage] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [defaultText, setDefaultText] = useState<string>(
@@ -41,103 +46,92 @@ const Page = async () => {
       });
 
       const data = await res.json();
-      console.log(data);
 
       setResponse(data.result);
-      setFileName(data.fileName);
+      if (response.includes("Please provide a valid prompt")) {
+        return;
+      }
       setLanguage(data.language);
+      setFileName(data.fileName);
+      setComponentName(data.componentName);
     } catch (error) {
       setResponse("Error: " + error);
     } finally {
       setLoading(false);
     }
   };
+  console.log(response);
+
   const formattedCode = response.replace(
-    /```typescript\n|```javascript\n|```tsx\n|```$/g,
+    /```typescript\n|```javascript\n|```tsx\n|```jsx\n|```\n|```$/g,
     ""
   );
 
   // console.log(response);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen overflow-x-hidden">
       <Navbar />
-      <div className="flex-1 flex">
-        <div className="w-1/3 min-h-full p-6 flex flex-col justify-between">
-          <div className="w-full h-5/6 flex justify-center items-center">
-            <h1 className="text-2xl">Login to save the chats</h1>
-          </div>
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-row items-center justify-center mb-1 w-full"
-          >
-            <Input
-              type="text"
-              name="prompt"
-              className="w-full mr-2"
-              placeholder="Enter text here"
-              value={defaultText}
-              onChange={(e) => setDefaultText(e.target.value)}
-            />
-
-            <ButtonBorder type="submit">Send</ButtonBorder>
-          </form>
-        </div>
-        <Separator orientation="vertical" />
-        <div className="w-2/3 min-h-full flex justify-center items-center">
-          <HeroHighlight containerClassName="h-full w-full">
+      <div className="flex-1 flex flex-col items-center justify-center">
+        <HeroHighlight containerClassName="flex-1 w-full">
+          <div className="w-screen flex justify-center items-center ">
             {submitted ? (
-              <div className="py-12 flex justify-center items-center flex-col h-full">
+              <div className="py-12 flex justify-center items-center flex-col">
                 {loading ? (
-                  <div className="inline-block w-8 h-8 border-4 rounded-full">
-                    <span className="visually-hidden">Loading...</span>
+                  <div className="flex justify-center items-center h-full w-full">
+                    <Loader2 className="animate-spin" />
                   </div>
                 ) : (
-                  <div className="p-4 h-full">
-                    <div className="flex mb-4">
-                      <Button
-                        className={`mr-1 py-2 rounded ${
-                          activeTab === "code"
-                            ? "bg-foreground text-background"
-                            : "bg-background hover:bg-foreground hover:text-background text-foreground"
-                        }`}
-                        onClick={() => setActiveTab("code")}
-                      >
-                        <CodeIcon />
-                        Code
-                      </Button>
-                      <Button
-                        className={`ml-1 py-2 rounded ${
-                          activeTab === "preview"
-                            ? "bg-foreground text-background"
-                            : "bg-background hover:bg-foreground hover:text-background text-foreground"
-                        }`}
-                        onClick={() => setActiveTab("preview")}
-                      >
-                        Preview
-                      </Button>
-                    </div>
-                    {activeTab === "code" ? (
-                      <pre className="max-w-3xl text-sm text-gray-800 overflow-x-auto flex flex-row justify-between text-wrap">
-                        <CodeBlock
-                          language={language}
-                          code={formattedCode}
-                          filename={fileName}
-                        />
-                      </pre>
-                    ) : (
-                      <div className="max-w-3xl text-sm text-gray-800 overflow-x-auto flex flex-row justify-between text-wrap">
-                        <div className="w-[900px] h-[450px] border-2 border-red-500"></div>
-                      </div>
-                    )}
+                  <div className="p-4">
+                    <Sandpack
+                      theme={theme === "dark" ? "dark" : "light"}
+                      template="react"
+                      files={{
+                        [fileName]: {
+                          code: formattedCode,
+                          active: true,
+                        },
+                        "/App.js": {
+                          code: `import React from "react";\nimport ${componentName} from "./${fileName}";\n\nexport default function App() {\n  return <${componentName} />;\n
+}`,
+                        },
+                      }}
+                      options={{
+                        externalResources: ["https://cdn.tailwindcss.com"],
+                        editorHeight: 600,
+                        wrapContent: true,
+                        showLineNumbers: true,
+                      }}
+                    />
                   </div>
                 )}
               </div>
             ) : (
               <HeroSection />
             )}
-          </HeroHighlight>
-        </div>
+          </div>
+          <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-4 w-full max-w-sm sm:max-w-md md:max-w-lg bg-background p-2 rounded-md z-50">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-row items-center justify-center mb-1 w-full"
+            >
+              <textarea
+                name="prompt"
+                className="w-full mr-2 p-2 border border-gray-300 rounded resize-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Generate a hero section with title and subtitle"
+                onChange={(e) => setDefaultText(e.target.value)}
+                rows={1}
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = "auto";
+                  target.style.height = `${target.scrollHeight}px`;
+                }}
+              />
+
+              <ButtonBorder type="submit">Send</ButtonBorder>
+            </form>
+          </div>
+        </HeroHighlight>
       </div>
     </div>
   );
