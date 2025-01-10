@@ -27,8 +27,9 @@ export async function POST(req: Request) {
     }
     const isTypescript = result.includes("React.FC");
     const language = isTypescript ? "typescript" : "javascript";
+    const extension = isTypescript ? ".tsx" : ".jsx";
 
-    const fileName = "CustomComponent.tsx";
+    const fileName = `CustomComponent.${extension}`;
     const componentName = "CustomComponent";
     return Response.json({ result, fileName, language, componentName });
   } catch (error: any) {

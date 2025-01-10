@@ -1,23 +1,15 @@
 "use client";
 import { ButtonBorder } from "@/components/ui/moving-border";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import React, { FormEvent, Suspense, useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import Navbar from "../Navbar";
-import HeroSection from "../HeroSection";
-import { CodeIcon, CopyCheck, CopyIcon, Loader2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { CodeBlock } from "@/components/ui/code-block";
+import HeroSection from "../GenerateHero";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
-import LoadingPage from "@/components/LoadingPage";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { useTheme } from "next-themes";
 import Footer from "@/components/Footer";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 
 const Page = () => {
-  const { toast } = useToast();
   const [submitted, setSubmitted] = useState(false);
   const { theme } = useTheme();
   const [response, setResponse] = useState<string>("");
@@ -28,7 +20,6 @@ const Page = () => {
   const [defaultText, setDefaultText] = useState<string>(
     "Generate a hero section with title and subtitle"
   );
-  const [activeTab, setActiveTab] = useState<"code" | "preview">("code");
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitted(true);

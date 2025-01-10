@@ -1,15 +1,11 @@
 "use client";
 import { ToggleTheme } from "./ToggleTheme";
 import { useState } from "react";
-import GithubDark from "@/public/images/githubDark.png";
-import GithubLight from "@/public/images/githubLight.png";
+
 import { X, Github } from "iconoir-react";
-import Image from "next/image";
-import { useTheme } from "next-themes";
 
 function NavItems() {
   const [isOpen, setIsOpen] = useState(false);
-  const { theme } = useTheme();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
