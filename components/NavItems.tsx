@@ -1,9 +1,9 @@
 "use client";
-import Link from "next/link";
 import { ToggleTheme } from "./ToggleTheme";
 import { useState } from "react";
 import GithubDark from "@/public/images/githubDark.png";
 import GithubLight from "@/public/images/githubLight.png";
+import { X, Github } from "iconoir-react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
@@ -18,28 +18,20 @@ function NavItems() {
     <>
       <div className="hidden md:flex space-x-4">
         <ToggleTheme />
-        <Link
-          href="/"
-          className="flex items-center text-gray-800 dark:text-white hover:text-blue-500 dark:hover:text-blue-500"
-        >
-          Home
-        </Link>
-        <Link
-          href="/generate"
-          className="flex items-center text-gray-800 dark:text-white hover:text-blue-500 dark:hover:text-blue-500"
-        >
-          Generate
-        </Link>
+
         <a
           className="flex items-center"
           href="https://github.com/akshatbajetha/compo-gen"
           target="_blank"
         >
-          <Image
-            src={theme === "light" ? GithubLight : GithubDark}
-            alt="github"
-            className="w-6 h-6"
-          />
+          <Github className="w-6 h-6" />
+        </a>
+        <a
+          className="flex items-center"
+          href="https://x.com/akshatbajetha/"
+          target="_blank"
+        >
+          <X className="w-6 h-6" />
         </a>
       </div>
       <div className="md:hidden">
@@ -66,27 +58,19 @@ function NavItems() {
         {isOpen && (
           <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg z-10 bg-background">
             <ToggleTheme />
-            <Link
-              href="/"
-              className="block px-4 py-2 text-gray-800 dark:text-white"
-            >
-              Home
-            </Link>
-            <Link
-              href="/generate"
-              className="block px-4 py-2 text-gray-800 dark:text-white"
-            >
-              Generate
-            </Link>
+
             <a
               className="block px-4 py-2"
               href="https://github.com/akshatbajetha/compo-gen"
             >
-              <Image
-                src={theme === "dark" ? GithubDark : GithubLight}
-                alt="github"
-                className="w-6 h-6"
-              />
+              <Github className="w-6 h-6" />
+            </a>
+            <a
+              className="flex items-center"
+              href="https://x.com/akshatbajetha/"
+              target="_blank"
+            >
+              <X className="w-6 h-6" />
             </a>
           </div>
         )}

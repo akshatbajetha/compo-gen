@@ -14,6 +14,7 @@ import LoadingPage from "@/components/LoadingPage";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { useTheme } from "next-themes";
 import Footer from "@/components/Footer";
+import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 
 const Page = () => {
   const { toast } = useToast();
@@ -68,12 +69,18 @@ const Page = () => {
     ""
   );
 
+  const words = [
+    {
+      text: "Generating...",
+    },
+  ];
+
   // console.log(response);
 
   return (
-    <>
-      <div className="flex flex-col min-h-screen overflow-x-hidden">
-        <Navbar />
+    <div className="flex flex-col h-screen">
+      <Navbar />
+      <div className="flex flex-col flex-1 overflow-x-hidden">
         <div className="flex-1 flex flex-col items-center justify-center">
           <HeroHighlight containerClassName="flex-1 w-full">
             <div className="w-screen flex justify-center items-center ">
@@ -81,7 +88,7 @@ const Page = () => {
                 <div className="py-12 flex justify-center items-center flex-col">
                   {loading ? (
                     <div className="flex justify-center items-center h-full w-full">
-                      <Loader2 className="animate-spin" />
+                      <TypewriterEffectSmooth duration={0.5} words={words} />
                     </div>
                   ) : (
                     <div className="p-4">
@@ -96,6 +103,7 @@ const Page = () => {
                           "/App.js": {
                             code: `import React from "react";\nimport ${componentName} from "./${fileName}";\n\nexport default function App() {\n  return <${componentName} />;\n
 }`,
+                            hidden: true,
                           },
                         }}
                         options={{
@@ -112,17 +120,18 @@ const Page = () => {
                 <HeroSection />
               )}
             </div>
-            <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 mb-4 w-full max-w-sm sm:max-w-md md:max-w-lg bg-background p-2 rounded-md z-50">
+            <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg rounded bg-background p-2">
               <form
                 onSubmit={handleSubmit}
                 className="flex flex-row items-center justify-center mb-1 w-full"
               >
                 <textarea
                   name="prompt"
-                  className="w-full mr-2 p-2 border border-gray-300 rounded resize-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full mr-2 p-2 border border-gray-300 rounded resize-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 "
                   placeholder="Generate a hero section with title and subtitle"
                   onChange={(e) => setDefaultText(e.target.value)}
                   rows={1}
+                  value={defaultText}
                   onInput={(e) => {
                     const target = e.target as HTMLTextAreaElement;
                     target.style.height = "auto";
@@ -137,7 +146,7 @@ const Page = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

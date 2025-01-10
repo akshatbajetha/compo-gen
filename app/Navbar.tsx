@@ -9,8 +9,9 @@ const Navbar: React.FC = () => {
     <>
       <nav className="flex items-center justify-between p-4">
         <div className="flex items-center">
-          <Link href="/">
+          <Link href="/" className="flex items-center gap-4">
             <Code2Icon size={40} />
+            <h1 className="text-3xl font-bold">CompoGen</h1>
           </Link>
         </div>
         <NavItems />

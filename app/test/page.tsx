@@ -1,50 +1,36 @@
-import Navbar from "../Navbar";
-import {
-  SandpackProvider,
-  SandpackLayout,
-  SandpackCodeEditor,
-  SandpackPreview,
-} from "@codesandbox/sandpack-react";
+import React from "react";
+import { FaGithub, FaTwitter } from "react-icons/fa";
 
-function page() {
-  const fileName = "CustomComponent.tsx";
-  const formattedCode = `import React from "react";
-
-export default function CustomComponent() {
+const CustomComponent: React.FC = () => {
   return (
-    <div>
-      <h1 className="text-red-500 text-5xl">Why is this not red</h1>
-    </div>
-  );
-}`;
-  return (
-    <div className="h-screen flex flex-col">
-      <Navbar />
-      <div className="border-2 border-red-500 h-full">
-        <SandpackProvider
-          template="react"
-          theme="auto"
-          files={{
-            "/CustomComponent.tsx": {
-              code: formattedCode,
-              active: true,
-            },
-            "/App.js": {
-              code: `import React from "react";\nimport CustomComponent from "./CustomComponent";\n\nexport default function App() {\n  return <CustomComponent />;\n
-}`,
-            },
-          }}
-          options={{
-            externalResources: ["https://cdn.tailwindcss.com"],
-          }}
-        >
-          <SandpackLayout>
-            <SandpackCodeEditor />
-            <SandpackPreview />
-          </SandpackLayout>
-        </SandpackProvider>
+    <nav className="flex justify-between items-center p-4 bg-white dark:bg-black shadow-md">
+      <div className="flex items-center">
+        <img
+          src="https://via.placeholder.com/150"
+          alt="Brand Logo"
+          className="h-8 w-auto"
+        />
       </div>
-    </div>
+      <div className="flex space-x-4">
+        <a
+          href="https://github.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
+        >
+          <FaGithub size={24} />
+        </a>
+        <a
+          href="https://twitter.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
+        >
+          <FaTwitter size={24} />
+        </a>
+      </div>
+    </nav>
   );
-}
-export default page;
+};
+
+export default CustomComponent;
