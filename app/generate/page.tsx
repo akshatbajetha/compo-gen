@@ -2,7 +2,7 @@
 import { ButtonBorder } from "@/components/ui/moving-border";
 import React, { FormEvent, useState } from "react";
 import Navbar from "../Navbar";
-import HeroSection from "../GenerateHero";
+import HeroSection from "../../components/GenerateHero";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { useTheme } from "next-themes";
