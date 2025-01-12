@@ -1,6 +1,6 @@
 import LandingPage from "../components/LandingPage";
 import Footer from "@/components/Footer";
-import Navbar from "./Navbar";
+import Navbar from "../components/Navbar";
 
 function page() {
   return (

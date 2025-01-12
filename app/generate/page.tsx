@@ -1,7 +1,7 @@
 "use client";
 import { ButtonBorder } from "@/components/ui/moving-border";
 import React, { FormEvent, useState } from "react";
-import Navbar from "../Navbar";
+import Navbar from "../../components/Navbar";
 import HeroSection from "../../components/GenerateHero";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { Sandpack } from "@codesandbox/sandpack-react";
@@ -20,6 +20,7 @@ const Page = () => {
   const [defaultText, setDefaultText] = useState<string>(
     "Generate a hero section with title and subtitle"
   );
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitted(true);
@@ -27,7 +28,15 @@ const Page = () => {
     setDefaultText("");
 
     const formData = new FormData(event.currentTarget);
+    const submitter = (event.nativeEvent as SubmitEvent).submitter;
+    if (submitter && submitter instanceof HTMLButtonElement) {
+      const { name, value } = submitter;
+      if (name) {
+        formData.append(name, value);
+      }
+    }
     const prompt = formData.get("prompt") as string;
+    const action = formData.get("action") as string;
 
     try {
       const res = await fetch("/api/generate", {
@@ -35,12 +44,12 @@ const Page = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ prompt, action }),
       });
 
       const data = await res.json();
 
-      setResponse(data.result);
+      setResponse(data.formattedCode);
       if (response.includes("Please provide a valid prompt")) {
         return;
       }
@@ -53,12 +62,6 @@ const Page = () => {
       setLoading(false);
     }
   };
-  console.log(response);
-
-  const formattedCode = response.replace(
-    /```typescript\n|```javascript\n|```tsx\n|```jsx\n|```\n|```$/g,
-    ""
-  );
 
   const words = [
     {
@@ -66,12 +69,10 @@ const Page = () => {
     },
   ];
 
-  // console.log(response);
-
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col">
       <Navbar />
-      <div className="flex flex-col flex-1 overflow-x-hidden">
+      <div className="flex flex-col h-screen overflow-x-hidden">
         <div className="flex-1 flex flex-col items-center justify-center">
           <HeroHighlight containerClassName="flex-1 w-full">
             <div className="w-screen flex justify-center items-center ">
@@ -88,13 +89,12 @@ const Page = () => {
                         template="react"
                         files={{
                           [fileName]: {
-                            code: formattedCode,
+                            code: response,
                             active: true,
                           },
                           "/App.js": {
                             code: `import React from "react";\nimport ${componentName} from "./${fileName}";\n\nexport default function App() {\n  return <${componentName} />;\n
 }`,
-                            hidden: true,
                           },
                         }}
                         options={{
@@ -111,7 +111,7 @@ const Page = () => {
                 <HeroSection />
               )}
             </div>
-            <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg rounded bg-background p-2">
+            <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg rounded bg-background p-2">
               <form
                 onSubmit={handleSubmit}
                 className="flex flex-row items-center justify-center mb-1 w-full"
@@ -119,18 +119,21 @@ const Page = () => {
                 <textarea
                   name="prompt"
                   className="w-full mr-2 p-2 border border-gray-300 rounded resize-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 "
-                  placeholder="Generate a hero section with title and subtitle"
-                  onChange={(e) => setDefaultText(e.target.value)}
-                  rows={1}
-                  value={defaultText}
-                  onInput={(e) => {
-                    const target = e.target as HTMLTextAreaElement;
-                    target.style.height = "auto";
-                    target.style.height = `${target.scrollHeight}px`;
-                  }}
+                  placeholder={
+                    submitted && !loading
+                      ? "Update the color of the text to Red"
+                      : "Generate a hero section with title and subtitle"
+                  }
+                  defaultValue={defaultText}
                 />
-
-                <ButtonBorder type="submit">Send</ButtonBorder>
+                {submitted && !loading && (
+                  <ButtonBorder name="action" value="update">
+                    Update
+                  </ButtonBorder>
+                )}
+                <ButtonBorder name="action" value="generate">
+                  Send
+                </ButtonBorder>
               </form>
             </div>
           </HeroHighlight>

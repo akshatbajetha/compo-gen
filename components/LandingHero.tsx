@@ -4,7 +4,7 @@ import { Code2 } from "lucide-react";
 
 function LandingHero() {
   return (
-    <section className="z-10 flex items-center justify-center w-full h-full  text-center p-4">
+    <section className="z-10 flex items-center justify-center w-full h-screen text-center p-4">
       <div className="max-w-2xl">
         <div className="flex flex-row items-center justify-center">
           <Code2 size={70} />

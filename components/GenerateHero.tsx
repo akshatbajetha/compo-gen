@@ -1,6 +1,4 @@
-import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 import React from "react";
-import AnimatedUnderline from "@/components/ui/animated-underline";
 import { Code2 } from "lucide-react";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 

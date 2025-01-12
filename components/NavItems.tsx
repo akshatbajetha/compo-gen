@@ -3,6 +3,9 @@ import { ToggleTheme } from "./ToggleTheme";
 import { useState } from "react";
 
 import { X, Github } from "iconoir-react";
+import Link from "next/link";
+import { HelpCircle } from "lucide-react";
+import { HelpModal } from "./HelpModal";
 
 function NavItems() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,9 +15,10 @@ function NavItems() {
   };
   return (
     <>
-      <div className="hidden md:flex space-x-4">
+      <div className="hidden md:flex space-x-5">
         <ToggleTheme />
 
+        <HelpModal />
         <a
           className="flex items-center"
           href="https://github.com/akshatbajetha/compo-gen"
@@ -55,6 +59,7 @@ function NavItems() {
           <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg z-10 bg-background">
             <ToggleTheme />
 
+            <HelpModal />
             <a
               className="block px-4 py-2"
               href="https://github.com/akshatbajetha/compo-gen"

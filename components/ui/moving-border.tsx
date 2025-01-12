@@ -13,7 +13,8 @@ import { cn } from "@/lib/utils";
 export function ButtonBorder({
   borderRadius = "1.75rem",
   children,
-  as: Component = "button",
+  name,
+  value,
   containerClassName,
   borderClassName,
   duration,
@@ -22,7 +23,8 @@ export function ButtonBorder({
 }: {
   borderRadius?: string;
   children: React.ReactNode;
-  as?: any;
+  name: string;
+  value: string;
   containerClassName?: string;
   borderClassName?: string;
   duration?: number;
@@ -30,7 +32,10 @@ export function ButtonBorder({
   [key: string]: any;
 }) {
   return (
-    <Component
+    <button
+      type="submit"
+      name={name}
+      value={value}
       className={cn(
         "bg-transparent relative h-12 w-28 p-[1px] overflow-hidden ",
         containerClassName
@@ -65,7 +70,7 @@ export function ButtonBorder({
       >
         {children}
       </div>
-    </Component>
+    </button>
   );
 }
 
