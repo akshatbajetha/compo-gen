@@ -1,6 +1,5 @@
 "use server";
 
-import { error, log } from "console";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
@@ -44,6 +43,8 @@ export async function generateCode(req: Request) {
         ""
       );
 
+      console.log(formattedCode);
+
       return Response.json({
         formattedCode,
         fileName,
@@ -81,6 +82,7 @@ export async function generateCode(req: Request) {
         /```typescript\n|```javascript\n|```tsx\n|```jsx\n|```\n|```$/g,
         ""
       );
+      console.log(formattedCode);
 
       return Response.json({
         formattedCode,

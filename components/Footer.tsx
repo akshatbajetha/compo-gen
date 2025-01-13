@@ -4,7 +4,7 @@ import BuyMeACoffee from "@/public/images/bmc.png";
 
 function Footer() {
   return (
-    <>
+    <div className="h-max">
       <Separator />
       <div className="flex flex-col items-center justify-center px-24 py-3 bottom-0 w-full">
         <div className="flex flex-row justify-between w-full">
@@ -27,7 +27,7 @@ function Footer() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 export default Footer;

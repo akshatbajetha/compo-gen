@@ -6,7 +6,7 @@ import NavItems from "@/components/NavItems";
 
 const Navbar: React.FC = () => {
   return (
-    <div className="fixed top-0 w-full z-50 bg-background">
+    <div className="top-0 fixed w-full z-50 bg-background h-16">
       <nav className="flex items-center justify-between px-24 py-3">
         <div className="flex items-center">
           <Link href="/" className="flex items-center gap-4">

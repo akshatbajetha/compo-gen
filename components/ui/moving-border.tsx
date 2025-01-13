@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 
 export function ButtonBorder({
   borderRadius = "1.75rem",
+  disabled = false,
   children,
   name,
   value,
@@ -22,6 +23,7 @@ export function ButtonBorder({
   ...otherProps
 }: {
   borderRadius?: string;
+  disabled?: boolean;
   children: React.ReactNode;
   name: string;
   value: string;
@@ -36,8 +38,9 @@ export function ButtonBorder({
       type="submit"
       name={name}
       value={value}
+      disabled={disabled}
       className={cn(
-        "bg-transparent relative h-12 w-28 p-[1px] overflow-hidden ",
+        "bg-foreground relative h-12 w-28 p-[1px] mx-1 overflow-hidden ",
         containerClassName
       )}
       style={{
