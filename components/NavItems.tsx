@@ -1,18 +1,27 @@
-"use client";
 import { ToggleTheme } from "./ToggleTheme";
-import { useState } from "react";
 
 import { X, Github } from "iconoir-react";
 import Link from "next/link";
-import { HelpCircle } from "lucide-react";
+import { HelpCircle, MenuIcon } from "lucide-react";
 import { HelpModal } from "./HelpModal";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignOutButton,
+  SignUpButton,
+} from "@clerk/nextjs";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { Button } from "./ui/button";
+import UserIcon from "./UserIcon";
 
 function NavItems() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
   return (
     <>
       <div className="hidden md:flex space-x-5">
@@ -33,48 +42,36 @@ function NavItems() {
         >
           <X className="w-6 h-6" />
         </a>
-      </div>
-      <div className="md:hidden">
-        <button
-          onClick={toggleMenu}
-          className="text-gray-800 dark:text-white focus:outline-none"
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            />
-          </svg>
-        </button>
-
-        {isOpen && (
-          <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg z-10 bg-background">
-            <ToggleTheme />
-
-            <HelpModal />
-            <a
-              className="block px-4 py-2"
-              href="https://github.com/akshatbajetha/compo-gen"
-            >
-              <Github className="w-6 h-6" />
-            </a>
-            <a
-              className="flex items-center"
-              href="https://x.com/akshatbajetha/"
-              target="_blank"
-            >
-              <X className="w-6 h-6" />
-            </a>
-          </div>
-        )}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="flex gap-4 max-w-[100px]">
+              <UserIcon />
+              <MenuIcon className="w-6 h-6" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-48" align="start" sideOffset={10}>
+            <SignedOut>
+              <DropdownMenuItem>
+                <SignInButton mode="modal">
+                  <button className="w-full text-left">Login</button>
+                </SignInButton>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <SignUpButton mode="modal">
+                  <button className="w-full text-left">Register</button>
+                </SignUpButton>
+              </DropdownMenuItem>
+            </SignedOut>
+            <SignedIn>
+              <DropdownMenuItem>
+                <SignOutButton>
+                  <button className="w-full text-left">Logout</button>
+                </SignOutButton>
+              </DropdownMenuItem>
+            </SignedIn>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </>
   );

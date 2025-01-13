@@ -1,7 +1,6 @@
 "use client";
 import { ButtonBorder } from "@/components/ui/moving-border";
 import React, { FormEvent, useEffect, useState } from "react";
-import Navbar from "../../components/Navbar";
 import HeroSection from "../../components/GenerateHero";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { Sandpack } from "@codesandbox/sandpack-react";
@@ -87,7 +86,6 @@ const Page = () => {
 
   return (
     <div className="flex flex-col overflow-x-hidden">
-      <Navbar />
       <div className="flex flex-col min-h-screen h-max overflow-hidden mt-16 w-screen">
         <div className="flex-1 flex flex-col items-center justify-center">
           <HeroHighlight containerClassName="flex-1 w-full">
@@ -116,10 +114,7 @@ const Page = () => {
                           </div>
                         )}
                         {localStorage.length > 0 && (
-                          <div
-                            className="cursor-pointer"
-                            title="Show all saved codes"
-                          >
+                          <div title="Show all saved codes">
                             <ShowSavedCodesModal />
                           </div>
                         )}

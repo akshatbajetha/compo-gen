@@ -22,7 +22,7 @@ export function SaveModal({ codeToSave }: { codeToSave: string }) {
     const formData = new FormData(event.currentTarget);
     const title = formData.get("title") as string;
     const code = formData.get("code") as string;
-    localStorage.setItem(title, code);
+    localStorage.setItem("Code - " + title, code);
     setValue("");
     setTimeout(() => {
       toast({

@@ -1,4 +1,3 @@
-"use client";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { Code2Icon } from "lucide-react";
