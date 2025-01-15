@@ -8,9 +8,12 @@ import { useTheme } from "next-themes";
 import Footer from "@/components/Footer";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { Textarea } from "@/components/ui/textarea";
-import { Download, Save, SaveAll } from "lucide-react";
+import { Download } from "lucide-react";
 import { SaveModal } from "@/components/SaveModal";
 import ShowSavedCodesModal from "@/components/ShowSavedCodesModal";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { useCodeStore } from "@/store/codeStore";
 
 const Page = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -21,13 +24,10 @@ const Page = () => {
   const [language, setLanguage] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const { code, setCode } = useCodeStore();
   const [defaultText, setDefaultText] = useState<string>(
     "Generate a hero section with title and subtitle"
   );
-
-  const saveToLocalStorage = () => {
-    localStorage.setItem("Code", response);
-  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,37 +46,77 @@ const Page = () => {
     const prompt = formData.get("prompt") as string;
     const action = formData.get("action") as string;
 
-    try {
-      const res = await fetch("/api/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ prompt, action }),
-      });
+    if (action === "generate") {
+      try {
+        const res = await fetch("/api/generate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt }),
+        });
 
-      const data = await res.json();
+        const data = await res.json();
+        console.log("Data: ", data);
 
-      setResponse(data.formattedCode);
-      if (
-        response === undefined ||
-        response === null ||
-        response.includes("Please provide a valid prompt")
-      ) {
-        setError(true);
-        setResponse("Error: Please provide a valid prompt");
+        setResponse(data.formattedCode);
+        if (
+          response === undefined ||
+          response === null ||
+          response.includes("Please provide a valid prompt")
+        ) {
+          setError(true);
+          setResponse("Error: Please provide a valid prompt");
+        }
+        setCode(response);
+        setLanguage(data.language);
+        setFileName(data.fileName);
+        setComponentName(data.componentName);
+      } catch (error) {
+        setResponse("Error: " + error);
+      } finally {
+        setLoading(false);
       }
-      setLanguage(data.language);
-      setFileName(data.fileName);
-      setComponentName(data.componentName);
-    } catch (error) {
-      setResponse("Error: " + error);
-    } finally {
-      setLoading(false);
+    } else if (action === "update") {
+      try {
+        const res = await fetch("/api/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt, response }),
+        });
+
+        const data = await res.json();
+        console.log("Data: ", data);
+        if (data.message) {
+          setError(true);
+        }
+        if (
+          data.formattedCode === undefined ||
+          data.formattedCode === null ||
+          data.formattedCode.includes("Error") ||
+          data.formattedCode.includes("Please provide a valid prompt")
+        ) {
+          setError(true);
+        }
+
+        setResponse(data.formattedCode);
+        setCode(response);
+
+        setLanguage(data.language);
+        setFileName(data.fileName);
+        setComponentName(data.componentName);
+      } catch (error) {
+        setResponse("Error: " + error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   console.log("Code: \n", response);
+  console.log("Store Code: \n", code);
 
   const words = [
     {
@@ -97,14 +137,14 @@ const Page = () => {
                       <TypewriterEffectSmooth duration={0.5} words={words} />
                     </div>
                   ) : (
-                    <div className="p-4 max-w-screen-xl">
+                    <div className="p-4 max-w-screen-2xl">
                       <div className="flex flex-row items-center justify-between">
                         {response !== "" && error === false && (
                           <div className="flex flex-row items-center gap-x-4 w-max m-4">
-                            <SaveModal codeToSave={response} />
+                            <SaveModal codeToSave={code} />
                             <a
                               href={`data:text/javascript;charset=utf-8,${encodeURIComponent(
-                                response
+                                code
                               )}`}
                               download={`${fileName}`}
                               title="Download Code"
@@ -113,11 +153,9 @@ const Page = () => {
                             </a>
                           </div>
                         )}
-                        {localStorage.length > 0 && (
-                          <div title="Show all saved codes">
-                            <ShowSavedCodesModal />
-                          </div>
-                        )}
+                        <Link href="/savedcodes">
+                          <Button>Saved Codes</Button>
+                        </Link>
                       </div>
 
                       <Sandpack
@@ -125,7 +163,9 @@ const Page = () => {
                         template="react"
                         files={{
                           [fileName]: {
-                            code: response,
+                            code: error
+                              ? "Error: Please provide a valid prompt"
+                              : response,
                             active: true,
                           },
                           "/App.js": {

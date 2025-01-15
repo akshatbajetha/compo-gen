@@ -20,6 +20,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import UserIcon from "./UserIcon";
+import SignoutLink from "./SignoutLink";
 
 function NavItems() {
   return (
@@ -46,10 +47,14 @@ function NavItems() {
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="flex gap-4 max-w-[100px]">
               <UserIcon />
-              <MenuIcon className="w-6 h-6" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-48" align="start" sideOffset={10}>
+            <SignedIn>
+              <DropdownMenuItem>
+                <SignoutLink />
+              </DropdownMenuItem>
+            </SignedIn>
             <SignedOut>
               <DropdownMenuItem>
                 <SignInButton mode="modal">
@@ -63,13 +68,6 @@ function NavItems() {
                 </SignUpButton>
               </DropdownMenuItem>
             </SignedOut>
-            <SignedIn>
-              <DropdownMenuItem>
-                <SignOutButton>
-                  <button className="w-full text-left">Logout</button>
-                </SignOutButton>
-              </DropdownMenuItem>
-            </SignedIn>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
