@@ -55,8 +55,9 @@ const Page = () => {
 
         if (data.message) {
           setError(true);
+        } else {
+          setError(false);
         }
-
         setCurrentCode(data.formattedCode);
       } catch (error) {
         setError(true);
@@ -77,8 +78,10 @@ const Page = () => {
         const data = await res.json();
         if (data.message) {
           setError(true);
+          return;
+        } else {
+          setError(false);
         }
-
         setCurrentCode(data.formattedCode);
       } catch (error) {
         setError(true);
@@ -101,7 +104,7 @@ const Page = () => {
         <div className="flex-1 flex flex-col items-center justify-center">
           <HeroHighlight containerClassName="flex-1 w-full">
             <div className="w-screen flex justify-center items-center ">
-              {submitted || currentCode !== "" ? (
+              {submitted ? (
                 <div className="py-12 flex justify-center items-center flex-col">
                   {loading ? (
                     <div className="flex justify-center items-center h-full w-full">
@@ -144,6 +147,7 @@ const Page = () => {
                           "/App.js": {
                             code: `import React from "react";\nimport CustomComponent from "./CustomComponent.jsx";\n\nexport default function App() {\n  return <CustomComponent />;\n
 }`,
+                            hidden: true,
                           },
                         }}
                         options={{

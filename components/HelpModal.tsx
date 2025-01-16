@@ -62,9 +62,13 @@ export function HelpModal() {
                 <p>
                   <span className="font-bold">
                     <ArrowRightIcon className="mr-1 inline-block h-4 w-4" />
-                    Save Locally <Save className="inline-block h-4 w-4" />:
+                    Save <Save className="inline-block h-4 w-4" />:
                   </span>{" "}
                   Save the code for easy access later.
+                  <br />
+                  <span className="text-neutral-700 dark:text-neutral-300 font-bold text-xs">
+                    Note: Changes you make in the editor will not be saved.
+                  </span>
                 </p>
               </div>
               <div className="flex items-center gap-2">

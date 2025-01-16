@@ -51,12 +51,7 @@ export async function generateCode(req: Request) {
     ) {
       return Response.json({ message: "Please provide a valid prompt" });
     }
-    const isTypescript = result.includes("React.FC");
-    const language = isTypescript ? "typescript" : "javascript";
-    const extension = isTypescript ? ".tsx" : ".jsx";
 
-    const fileName = `CustomComponent${extension}`;
-    const componentName = "CustomComponent";
     const formattedCode = result.replace(
       /```typescript\n|```javascript\n|```tsx\n|```jsx\n|```\n|```$/g,
       ""
@@ -64,9 +59,6 @@ export async function generateCode(req: Request) {
 
     return Response.json({
       formattedCode,
-      fileName,
-      language,
-      componentName,
     });
   } catch (error: any) {
     console.log("Error: " + error);
@@ -105,12 +97,6 @@ export async function updateCode(req: Request) {
       });
     }
 
-    const isTypescript = result.includes("React.FC");
-    const language = isTypescript ? "typescript" : "javascript";
-    const extension = isTypescript ? ".tsx" : ".jsx";
-
-    const fileName = `CustomComponent${extension}`;
-    const componentName = "CustomComponent";
     formattedCode = result.replace(
       /```typescript\n|```javascript\n|```tsx\n|```jsx\n|```\n|```$/g,
       ""
@@ -118,9 +104,6 @@ export async function updateCode(req: Request) {
 
     return Response.json({
       formattedCode,
-      fileName,
-      language,
-      componentName,
     });
   } catch (error: any) {
     console.log("Error: " + error);
