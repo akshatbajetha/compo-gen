@@ -3,11 +3,19 @@
 import { useFormState } from "react-dom";
 import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { actionFunction } from "@/lib/types";
+
+type StateType = {
+  message: string;
+};
 
 const initialState = {
   message: "",
 };
+
+type actionFunction = (
+  prevState: StateType,
+  formData: FormData
+) => Promise<{ message: string }>;
 
 function FormContainer({
   action,
