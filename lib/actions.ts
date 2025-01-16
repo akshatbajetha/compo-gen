@@ -60,7 +60,7 @@ export async function generateCode(req: Request) {
     return Response.json({
       formattedCode,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.log("Error: " + error);
     return Response.json({ error });
   }
@@ -105,14 +105,13 @@ export async function updateCode(req: Request) {
     return Response.json({
       formattedCode,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.log("Error: " + error);
     return Response.json({ error });
   }
 }
 
 export const saveCodeAction = async (
-  prevState: any,
   formData: FormData
 ): Promise<{ message: string }> => {
   const user = await getAuthUser();
@@ -136,7 +135,6 @@ export const saveCodeAction = async (
 };
 
 export const deleteCodeAction = async (
-  prevState: any,
   formData: FormData
 ): Promise<{ message: string }> => {
   const id = formData.get("id") as string;

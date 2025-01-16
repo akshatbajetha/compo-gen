@@ -1,6 +1,5 @@
 import { fetchCodeById } from "@/lib/actions";
 import { Sandpack } from "@codesandbox/sandpack-react";
-import { javascript } from "@codemirror/lang-javascript";
 async function ViewSavedCode({ params }: { params: { id: string } }) {
   const codeObject = await fetchCodeById(params.id);
   const code = codeObject?.code!;

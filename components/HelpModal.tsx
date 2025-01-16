@@ -91,7 +91,7 @@ export function HelpModal() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-neutral-700 dark:text-neutral-300 font-bold text-xs">
-                  You can save and view codes only when you're logged in.
+                  You can save and view codes only when you&apos;re logged in.
                 </span>
               </div>
             </div>

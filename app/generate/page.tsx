@@ -177,7 +177,6 @@ const Page = () => {
                       ? "Change the colour of the button to red OR Generate a hero section with title and subtitle"
                       : "Generate a hero section with title and subtitle"
                   }
-                  defaultValue={defaultText}
                 />
                 {!loading && currentCode !== "" && (
                   <ButtonBorder name="action" value="update">
