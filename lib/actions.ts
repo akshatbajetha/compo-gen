@@ -112,6 +112,7 @@ export async function updateCode(req: Request) {
 }
 
 export const saveCodeAction = async (
+  prevState: { message: string },
   formData: FormData
 ): Promise<{ message: string }> => {
   const user = await getAuthUser();
@@ -135,6 +136,7 @@ export const saveCodeAction = async (
 };
 
 export const deleteCodeAction = async (
+  prevState: { message: string },
   formData: FormData
 ): Promise<{ message: string }> => {
   const id = formData.get("id") as string;
