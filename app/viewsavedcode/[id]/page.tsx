@@ -2,9 +2,9 @@ import { fetchCodeById } from "@/lib/actions";
 import { Sandpack } from "@codesandbox/sandpack-react";
 async function ViewSavedCode({ params }: { params: { id: string } }) {
   const codeObject = await fetchCodeById(params.id);
-  const code = codeObject?.code!;
+  const code = codeObject?.code || "";
   function formatCode(code: string) {
-    let indentLevel = 0;
+    const indentLevel = 0;
 
     return code
       .replace(/;/g, ";\n")

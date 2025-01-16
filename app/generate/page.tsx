@@ -20,15 +20,11 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const { currentCode, setCurrentCode } = useCodeStore();
-  const [defaultText, setDefaultText] = useState<string>(
-    "Generate a hero section with title and subtitle"
-  );
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitted(true);
     setLoading(true);
-    setDefaultText("");
 
     const formData = new FormData(event.currentTarget);
     const submitter = (event.nativeEvent as SubmitEvent).submitter;
