@@ -11,7 +11,6 @@ import { Input } from "./ui/input";
 import { saveCodeAction } from "@/lib/actions";
 import FormContainer from "./FormContainer";
 import { SignInButton, useAuth } from "@clerk/nextjs";
-import { useCodeStore } from "@/store/codeStore";
 
 export function SaveModal({ codeToSave }: { codeToSave: string }) {
   const { userId } = useAuth();
@@ -28,16 +27,18 @@ export function SaveModal({ codeToSave }: { codeToSave: string }) {
                 <Save className="mr-1 inline-block h-6 w-6" /> Do you want to
                 save the current code to local storage?
               </h4>
-              <FormContainer action={saveCodeAction}>
+              <FormContainer className="m-10" action={saveCodeAction}>
                 <Input
                   name="title"
                   required={true}
                   placeholder="Enter the title of the component"
+                  className="m-2"
                 />
                 <Input
                   name="description"
                   required={true}
                   placeholder="Enter the description of the component"
+                  className="m-2"
                 />
                 <input name="code" hidden={true} value={codeToSave} />
                 <Button
@@ -52,7 +53,7 @@ export function SaveModal({ codeToSave }: { codeToSave: string }) {
         </Modal>
       ) : (
         <SignInButton mode="modal">
-          <button>Login to save codes</button>
+          <Save className="w-6 h-6" />
         </SignInButton>
       )}
     </div>

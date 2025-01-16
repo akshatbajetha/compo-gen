@@ -3,6 +3,8 @@
 import { currentUser } from "@clerk/nextjs/server";
 import OpenAI from "openai";
 import db from "./db";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -42,8 +44,12 @@ export async function generateCode(req: Request) {
       temperature: 0.8,
     });
     const result = completion.choices[0].message.content!;
-    if (result.includes("Please provide a valid prompt")) {
-      return Response.json({ result });
+    if (
+      result === undefined ||
+      result === null ||
+      result.includes("Please provide a valid prompt")
+    ) {
+      return Response.json({ message: "Please provide a valid prompt" });
     }
     const isTypescript = result.includes("React.FC");
     const language = isTypescript ? "typescript" : "javascript";
@@ -55,7 +61,6 @@ export async function generateCode(req: Request) {
       /```typescript\n|```javascript\n|```tsx\n|```jsx\n|```\n|```$/g,
       ""
     );
-    console.log(formattedCode);
 
     return Response.json({
       formattedCode,
@@ -72,7 +77,7 @@ export async function generateCode(req: Request) {
 export async function updateCode(req: Request) {
   const formData = await req.json();
   const promptToUse = formData.prompt;
-  const prevCode = formData.response;
+  const prevCode = formData.currentCode;
   let formattedCode: string = prevCode;
   try {
     const completion = await openai.chat.completions.create({
@@ -94,7 +99,10 @@ export async function updateCode(req: Request) {
       result.startsWith("Error:")
     ) {
       formattedCode = prevCode;
-      return Response.json({ message: "Please provide a valid prompt" });
+      return Response.json({
+        message: "Please provide a valid prompt",
+        formattedCode,
+      });
     }
 
     const isTypescript = result.includes("React.FC");
@@ -107,8 +115,6 @@ export async function updateCode(req: Request) {
       /```typescript\n|```javascript\n|```tsx\n|```jsx\n|```\n|```$/g,
       ""
     );
-
-    console.log(formattedCode);
 
     return Response.json({
       formattedCode,
@@ -140,13 +146,30 @@ export const saveCodeAction = async (
         clerkId: user.id,
       },
     });
+  } catch (error) {
+    return renderError(error);
+  }
+  redirect("/savedcodes");
+};
 
-    return { message: "Code saved successfully" };
+export const deleteCodeAction = async (
+  prevState: any,
+  formData: FormData
+): Promise<{ message: string }> => {
+  const id = formData.get("id") as string;
+
+  try {
+    await db.code.delete({
+      where: {
+        id,
+      },
+    });
+    revalidatePath("/savedcodes");
+    return { message: "Code deleted successfully" };
   } catch (error) {
     return renderError(error);
   }
 };
-
 export const fetchSavedCodes = async () => {
   const user = await getAuthUser();
   const savedCodes = await db.code.findMany({
@@ -161,4 +184,16 @@ export const fetchSavedCodes = async () => {
     },
   });
   return savedCodes;
+};
+
+export const fetchCodeById = async (id: string) => {
+  const code = await db.code.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      code: true,
+    },
+  });
+  return code;
 };

@@ -4,7 +4,6 @@ import {
   Modal,
   ModalBody,
   ModalContent,
-  ModalFooter,
   ModalTrigger,
 } from "@/components/ui/animated-modal";
 import {
@@ -23,7 +22,7 @@ export function HelpModal() {
           <HelpCircle className="w-6 h-6" />
         </ModalTrigger>
         <ModalBody>
-          <ModalContent className=" overflow-y-auto">
+          <ModalContent className=" overflow-y-hidden">
             <h4 className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center">
               <HelpCircle className="mr-1 inline-block h-6 w-6" /> How to use
               CompoGen
@@ -65,8 +64,7 @@ export function HelpModal() {
                     <ArrowRightIcon className="mr-1 inline-block h-4 w-4" />
                     Save Locally <Save className="inline-block h-4 w-4" />:
                   </span>{" "}
-                  Save the code to your browser's local storage for easy access
-                  later.
+                  Save the code for easy access later.
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -77,6 +75,20 @@ export function HelpModal() {
                   </span>{" "}
                   Download the code directly to your device if required.
                 </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <p>
+                  <span className="font-bold">
+                    <ArrowRightIcon className="mr-1 inline-block h-4 w-4" />
+                    View Saved Codes:
+                  </span>{" "}
+                  View all the codes / components you have saved
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-neutral-700 dark:text-neutral-300 font-bold text-xs">
+                  You can save and view codes only when you're logged in.
+                </span>
               </div>
             </div>
             <div className="flex  items-center justify-center right-0 bottom-0">

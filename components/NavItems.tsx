@@ -2,15 +2,9 @@ import { ToggleTheme } from "./ToggleTheme";
 
 import { X, Github } from "iconoir-react";
 import Link from "next/link";
-import { HelpCircle, MenuIcon } from "lucide-react";
+
 import { HelpModal } from "./HelpModal";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignOutButton,
-  SignUpButton,
-} from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,12 +39,16 @@ function NavItems() {
         </a>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex gap-4 max-w-[100px]">
+            <Button variant="outline" className="flex max-w-[100px]">
               <UserIcon />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-48" align="start" sideOffset={10}>
             <SignedIn>
+              <DropdownMenuItem>
+                <Link href="/savedcodes">Saved Codes</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <SignoutLink />
               </DropdownMenuItem>

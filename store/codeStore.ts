@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
 interface CodeState {
-  code: string;
-  setCode: (updatedCode: string) => void;
+  currentCode: string;
+  setCurrentCode: (updatedCode: string) => void;
 }
 
 export const useCodeStore = create<CodeState>((set) => ({
-  code: "",
-  setCode: (updatedCode: string) => set({ code: updatedCode }),
+  currentCode: "",
+  setCurrentCode: (updatedCode: string) => set({ currentCode: updatedCode }),
 }));

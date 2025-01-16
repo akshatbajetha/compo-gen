@@ -1,6 +1,6 @@
 "use client";
 import { ButtonBorder } from "@/components/ui/moving-border";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import HeroSection from "../../components/GenerateHero";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { Sandpack } from "@codesandbox/sandpack-react";
@@ -10,7 +10,6 @@ import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { Textarea } from "@/components/ui/textarea";
 import { Download } from "lucide-react";
 import { SaveModal } from "@/components/SaveModal";
-import ShowSavedCodesModal from "@/components/ShowSavedCodesModal";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useCodeStore } from "@/store/codeStore";
@@ -18,13 +17,9 @@ import { useCodeStore } from "@/store/codeStore";
 const Page = () => {
   const [submitted, setSubmitted] = useState(false);
   const { theme } = useTheme();
-  const [response, setResponse] = useState<string>("");
-  const [fileName, setFileName] = useState<string>("");
-  const [componentName, setComponentName] = useState<string>("");
-  const [language, setLanguage] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const { code, setCode } = useCodeStore();
+  const { currentCode, setCurrentCode } = useCodeStore();
   const [defaultText, setDefaultText] = useState<string>(
     "Generate a hero section with title and subtitle"
   );
@@ -57,23 +52,15 @@ const Page = () => {
         });
 
         const data = await res.json();
-        console.log("Data: ", data);
 
-        setResponse(data.formattedCode);
-        if (
-          response === undefined ||
-          response === null ||
-          response.includes("Please provide a valid prompt")
-        ) {
+        if (data.message) {
           setError(true);
-          setResponse("Error: Please provide a valid prompt");
         }
-        setCode(response);
-        setLanguage(data.language);
-        setFileName(data.fileName);
-        setComponentName(data.componentName);
+
+        setCurrentCode(data.formattedCode);
       } catch (error) {
-        setResponse("Error: " + error);
+        setError(true);
+        console.log("Error: ", error);
       } finally {
         setLoading(false);
       }
@@ -84,39 +71,23 @@ const Page = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ prompt, response }),
+          body: JSON.stringify({ prompt, currentCode }),
         });
 
         const data = await res.json();
-        console.log("Data: ", data);
         if (data.message) {
           setError(true);
         }
-        if (
-          data.formattedCode === undefined ||
-          data.formattedCode === null ||
-          data.formattedCode.includes("Error") ||
-          data.formattedCode.includes("Please provide a valid prompt")
-        ) {
-          setError(true);
-        }
 
-        setResponse(data.formattedCode);
-        setCode(response);
-
-        setLanguage(data.language);
-        setFileName(data.fileName);
-        setComponentName(data.componentName);
+        setCurrentCode(data.formattedCode);
       } catch (error) {
-        setResponse("Error: " + error);
+        setError(true);
+        console.log("Error: ", error);
       } finally {
         setLoading(false);
       }
     }
   };
-
-  console.log("Code: \n", response);
-  console.log("Store Code: \n", code);
 
   const words = [
     {
@@ -130,7 +101,7 @@ const Page = () => {
         <div className="flex-1 flex flex-col items-center justify-center">
           <HeroHighlight containerClassName="flex-1 w-full">
             <div className="w-screen flex justify-center items-center ">
-              {submitted ? (
+              {submitted || currentCode !== "" ? (
                 <div className="py-12 flex justify-center items-center flex-col">
                   {loading ? (
                     <div className="flex justify-center items-center h-full w-full">
@@ -139,14 +110,14 @@ const Page = () => {
                   ) : (
                     <div className="p-4 max-w-screen-2xl">
                       <div className="flex flex-row items-center justify-between">
-                        {response !== "" && error === false && (
+                        {currentCode !== "" && error === false && (
                           <div className="flex flex-row items-center gap-x-4 w-max m-4">
-                            <SaveModal codeToSave={code} />
+                            <SaveModal codeToSave={currentCode} />
                             <a
                               href={`data:text/javascript;charset=utf-8,${encodeURIComponent(
-                                code
+                                currentCode
                               )}`}
-                              download={`${fileName}`}
+                              download={`CustomComponent.jsx`}
                               title="Download Code"
                             >
                               <Download className="w-6 h-6" />
@@ -154,7 +125,9 @@ const Page = () => {
                           </div>
                         )}
                         <Link href="/savedcodes">
-                          <Button>Saved Codes</Button>
+                          <Button className="text-background bg-foreground hover:text-foreground hover:bg-background">
+                            Saved Codes
+                          </Button>
                         </Link>
                       </div>
 
@@ -162,14 +135,14 @@ const Page = () => {
                         theme={theme === "dark" ? "dark" : "light"}
                         template="react"
                         files={{
-                          [fileName]: {
+                          "/CustomComponent.jsx": {
                             code: error
                               ? "Error: Please provide a valid prompt"
-                              : response,
+                              : currentCode,
                             active: true,
                           },
                           "/App.js": {
-                            code: `import React from "react";\nimport ${componentName} from "./${fileName}";\n\nexport default function App() {\n  return <${componentName} />;\n
+                            code: `import React from "react";\nimport CustomComponent from "./CustomComponent.jsx";\n\nexport default function App() {\n  return <CustomComponent />;\n
 }`,
                           },
                         }}
@@ -187,7 +160,7 @@ const Page = () => {
                 <HeroSection />
               )}
             </div>
-            <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg rounded bg-background p-2">
+            <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg rounded bg-background p-2 z-50">
               <form
                 onSubmit={handleSubmit}
                 className="flex flex-row items-center justify-center mb-1 w-full"
@@ -196,20 +169,22 @@ const Page = () => {
                   name="prompt"
                   className=" "
                   placeholder={
-                    submitted && !loading
+                    submitted && !loading && currentCode !== ""
                       ? "Change the colour of the button to red OR Generate a hero section with title and subtitle"
                       : "Generate a hero section with title and subtitle"
                   }
                   defaultValue={defaultText}
                 />
-                {submitted && !loading && (
+                {!loading && currentCode !== "" && (
                   <ButtonBorder name="action" value="update">
                     Update
                   </ButtonBorder>
                 )}
-                <ButtonBorder name="action" value="generate">
-                  Send
-                </ButtonBorder>
+                {!loading && (
+                  <ButtonBorder name="action" value="generate">
+                    Send
+                  </ButtonBorder>
+                )}
               </form>
             </div>
           </HeroHighlight>

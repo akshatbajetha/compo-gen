@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (config) => {
+    config.infrastructureLogging = {
+      level: "error", // Suppress warnings and only log errors
+    };
+    return config;
+  },
   images: {
     remotePatterns: [
       {

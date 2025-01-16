@@ -15,9 +15,11 @@ export type actionFunction = (
 function FormContainer({
   action,
   children,
+  className,
 }: {
   action: actionFunction;
   children: React.ReactNode;
+  className?: string;
 }) {
   const [state, formAction] = useFormState(action, initialState);
   const { toast } = useToast();
@@ -28,7 +30,7 @@ function FormContainer({
   }, [state]);
   return (
     <form
-      className="flex flex-col items-center justify-center m-10"
+      className={`flex flex-col items-center justify-center ${className}`}
       action={formAction}
     >
       {children}

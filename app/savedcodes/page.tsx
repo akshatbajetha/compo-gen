@@ -1,3 +1,4 @@
+import FormContainer from "@/components/FormContainer";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -7,19 +8,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchSavedCodes } from "@/lib/actions";
-import { useCodeStore } from "@/store/codeStore";
+import { deleteCodeAction, fetchSavedCodes } from "@/lib/actions";
 import { auth } from "@clerk/nextjs/server";
-import { DeleteIcon, View } from "lucide-react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 async function SavedCodesPage() {
   const { userId } = await auth();
   const savedCodes = await fetchSavedCodes();
+
   if (savedCodes.length === 0)
-    return <h1 className="text-2xl">You have no saved codes yet.</h1>;
+    return (
+      <h1 className="mt-24 flex justify-center text-2xl">
+        You have no saved codes yet.
+      </h1>
+    );
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex mt-24 justify-center h-screen">
       {userId ? (
         <div>
           <h4 className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center mb-4">
@@ -42,8 +47,13 @@ async function SavedCodesPage() {
                       <TableCell>{title}</TableCell>
                       <TableCell>{description}</TableCell>
                       <TableCell className="flex items-center gap-x-2">
-                        <Button>View</Button>
-                        <Button>Delete</Button>
+                        <Link href={`/viewsavedcode/${id}`}>
+                          <Button>View</Button>
+                        </Link>
+                        <FormContainer action={deleteCodeAction}>
+                          <input readOnly name="id" hidden={true} value={id} />
+                          <Button type="submit">Delete</Button>
+                        </FormContainer>
                       </TableCell>
                     </TableRow>
                   );
