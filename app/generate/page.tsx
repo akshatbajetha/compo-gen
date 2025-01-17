@@ -8,11 +8,12 @@ import { useTheme } from "next-themes";
 import Footer from "@/components/Footer";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { Textarea } from "@/components/ui/textarea";
-import { Download } from "lucide-react";
+import { Copy, Download } from "lucide-react";
 import { SaveModal } from "@/components/SaveModal";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useCodeStore } from "@/store/codeStore";
+import { toast } from "@/hooks/use-toast";
 
 const Page = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -126,6 +127,18 @@ const Page = () => {
                             >
                               <Download className="w-6 h-6" />
                             </a>
+                            {/* Copy Code button */}
+                            <button
+                              onClick={() => {
+                                navigator.clipboard.writeText(currentCode);
+                                toast({
+                                  title: "Code copied to clipboard",
+                                });
+                              }}
+                              title="Copy Code"
+                            >
+                              <Copy className="w-6 h-6" />
+                            </button>
                           </div>
                         )}
                         <Link href="/savedcodes">
