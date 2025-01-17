@@ -16,3 +16,9 @@ model Code {
   updatedAt   DateTime @updatedAt
   clerkId     String
 }
+
+model FineTune {
+  id     String @id @default(uuid()) @map("_id")
+  code   String
+  prompt String
+}

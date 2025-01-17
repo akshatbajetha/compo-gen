@@ -19,7 +19,7 @@ const Page = () => {
   const { theme } = useTheme();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const { currentCode, setCurrentCode } = useCodeStore();
+  const { currentCode, prompt, setCurrentCode, setPrompt } = useCodeStore();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,6 +36,8 @@ const Page = () => {
     }
     const prompt = formData.get("prompt") as string;
     const action = formData.get("action") as string;
+
+    setPrompt(prompt);
 
     if (action === "generate") {
       try {
@@ -111,7 +113,10 @@ const Page = () => {
                       <div className="flex flex-row items-center justify-between">
                         {currentCode !== "" && error === false && (
                           <div className="flex flex-row items-center gap-x-4 w-max m-4">
-                            <SaveModal codeToSave={currentCode} />
+                            <SaveModal
+                              prompt={prompt}
+                              codeToSave={currentCode}
+                            />
                             <a
                               href={`data:text/javascript;charset=utf-8,${encodeURIComponent(
                                 currentCode

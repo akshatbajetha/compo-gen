@@ -119,6 +119,7 @@ export const saveCodeAction = async (
   try {
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
+    const prompt = formData.get("prompt") as string;
     const code = formData.get("code") as string;
 
     await db.code.create({
@@ -127,6 +128,13 @@ export const saveCodeAction = async (
         description,
         code,
         clerkId: user.id,
+      },
+    });
+
+    await db.fineTune.create({
+      data: {
+        prompt,
+        code,
       },
     });
   } catch (error) {

@@ -12,7 +12,13 @@ import { saveCodeAction } from "@/lib/actions";
 import FormContainer from "./FormContainer";
 import { SignInButton, useAuth } from "@clerk/nextjs";
 
-export function SaveModal({ codeToSave }: { codeToSave: string }) {
+export function SaveModal({
+  codeToSave,
+  prompt,
+}: {
+  codeToSave: string;
+  prompt: string;
+}) {
   const { userId } = useAuth();
   return (
     <div className="flex items-center justify-center" title="Save Code">
@@ -41,6 +47,7 @@ export function SaveModal({ codeToSave }: { codeToSave: string }) {
                   className="m-2"
                 />
                 <input name="code" hidden={true} value={codeToSave} />
+                <input name="prompt" hidden={true} value={prompt} />
                 <Button
                   type="submit"
                   className="mt-10 px-6 py-4 h-max w-max bg-foreground text-lg font-bold text-background hover:bg-background hover:text-foreground"
