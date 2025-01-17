@@ -186,7 +186,7 @@ const Page = () => {
                 )}
                 {!loading && (
                   <ButtonBorder name="action" value="generate">
-                    Send
+                    Submit
                   </ButtonBorder>
                 )}
               </form>
