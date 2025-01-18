@@ -26,6 +26,7 @@ const Page = () => {
     event.preventDefault();
     setSubmitted(true);
     setLoading(true);
+    setError(false);
 
     const formData = new FormData(event.currentTarget);
     const submitter = (event.nativeEvent as SubmitEvent).submitter;
