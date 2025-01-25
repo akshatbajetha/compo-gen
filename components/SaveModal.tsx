@@ -31,7 +31,7 @@ export function SaveModal({
             <ModalContent className=" overflow-y-auto">
               <h4 className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center mb-4">
                 <Save className="mr-1 inline-block h-6 w-6" /> Do you want to
-                save the current code to local storage?
+                save the current code to your account?
               </h4>
               <FormContainer className="m-10" action={saveCodeAction}>
                 <Input
