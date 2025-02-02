@@ -41,7 +41,7 @@ export async function generateCode(req: Request) {
         },
         { role: "user", content: promptToUse },
       ],
-      temperature: 0.8,
+      temperature: 0.3,
     });
     const result = completion.choices[0].message.content!;
     if (
@@ -81,7 +81,7 @@ export async function updateCode(req: Request) {
         },
         { role: "user", content: promptToUse },
       ],
-      temperature: 0.8,
+      temperature: 0.3,
     });
     const result = completion.choices[0].message.content!;
     if (
