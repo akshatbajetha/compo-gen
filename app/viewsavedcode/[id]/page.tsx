@@ -1,3 +1,4 @@
+import Tools from "@/components/Tools";
 import { fetchCodeById } from "@/lib/actions";
 import { Sandpack } from "@codesandbox/sandpack-react";
 async function ViewSavedCode({ params }: { params: { id: string } }) {
@@ -22,6 +23,7 @@ async function ViewSavedCode({ params }: { params: { id: string } }) {
   return (
     <div className="py-12 flex justify-center items-center flex-col">
       <div className="p-4 mt-16 max-w-screen-2xl">
+        <Tools currentCode={formattedCode} />
         <Sandpack
           theme="dark"
           template="react"

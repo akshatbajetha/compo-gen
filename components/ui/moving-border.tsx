@@ -39,7 +39,7 @@ export function ButtonBorder({
       value={value}
       disabled={disabled}
       className={cn(
-        "bg-foreground relative h-12 w-28 p-[1px] mx-1 overflow-hidden ",
+        "bg-foreground relative md:h-12 md:w-20 h-[40px] w-20 p-[1px] mx-1 overflow-hidden ",
         containerClassName
       )}
       style={{

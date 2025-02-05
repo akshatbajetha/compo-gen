@@ -12,8 +12,10 @@ const GenerateHero: React.FC = () => {
     <section className="flex flex-col items-center justify-center">
       <div className="flex flex-col items-center">
         <div className="flex flex-row items-center">
-          <Code2 size={70} />
-          <h1 className="text-5xl font-bold text-foreground p-5">CompoGen</h1>
+          <Code2 className="md:w-20 md:h-20 w-10 h-10" />
+          <h1 className="md:text-5xl text-2xl font-bold text-foreground md:p-5 p-3">
+            CompoGen
+          </h1>
         </div>
         <TypewriterEffectSmooth words={words} />
       </div>

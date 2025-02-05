@@ -16,13 +16,14 @@ import {
 
 export function HelpModal() {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex md:items-center md:justify-center">
       <Modal>
         <ModalTrigger className="flex justify-center group/modal-btn">
           <HelpCircle className="w-6 h-6" />
+          <p className="md:hidden pl-2 font-semibold">How to use</p>
         </ModalTrigger>
         <ModalBody>
-          <ModalContent className=" overflow-y-hidden">
+          <ModalContent className="overflow-auto md:overflow-y-hidden">
             <h4 className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center">
               <HelpCircle className="mr-1 inline-block h-6 w-6" /> How to use
               CompoGen

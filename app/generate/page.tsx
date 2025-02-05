@@ -5,7 +5,6 @@ import HeroSection from "../../components/GenerateHero";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { useTheme } from "next-themes";
-import Footer from "@/components/Footer";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { Textarea } from "@/components/ui/textarea";
 import { Copy, Download } from "lucide-react";
@@ -111,7 +110,7 @@ const Page = () => {
                       <TypewriterEffectSmooth duration={0.5} words={words} />
                     </div>
                   ) : (
-                    <div className="p-4 max-w-screen-2xl">
+                    <div className="p-4 max-w-[1300px]">
                       <div className="flex flex-row items-center justify-between">
                         {currentCode !== "" && error === false && (
                           <div className="flex flex-row items-center gap-x-4 w-max m-4">
@@ -179,7 +178,7 @@ const Page = () => {
                 <HeroSection />
               )}
             </div>
-            <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg rounded bg-background p-2 z-50">
+            <div className="fixed md:bottom-16 bottom-10 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg rounded bg-background p-2 z-40">
               <form
                 onSubmit={handleSubmit}
                 className="flex flex-row items-center justify-center mb-1 w-full"
@@ -193,22 +192,23 @@ const Page = () => {
                       : "Generate a hero section with title and subtitle"
                   }
                 />
-                {!loading && currentCode !== "" && (
-                  <ButtonBorder name="action" value="update">
-                    Update
-                  </ButtonBorder>
-                )}
-                {!loading && (
-                  <ButtonBorder name="action" value="generate">
-                    Submit
-                  </ButtonBorder>
-                )}
+                <div className="flex md:flex-row md:items-center flex-col items-center gap-y-2">
+                  {!loading && currentCode !== "" && (
+                    <ButtonBorder name="action" value="update">
+                      Update
+                    </ButtonBorder>
+                  )}
+                  {!loading && (
+                    <ButtonBorder name="action" value="generate">
+                      Submit
+                    </ButtonBorder>
+                  )}
+                </div>
               </form>
             </div>
           </HeroHighlight>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

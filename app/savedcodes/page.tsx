@@ -44,15 +44,21 @@ async function SavedCodesPage() {
                   const { id, title, description } = savedCode;
                   return (
                     <TableRow key={id}>
-                      <TableCell>{title}</TableCell>
-                      <TableCell>{description}</TableCell>
+                      <TableCell className="md:text-base text-sm md:text-left text-center">
+                        {title}
+                      </TableCell>
+                      <TableCell className="md:text-base text-xs md:text-left text-center">
+                        {description}
+                      </TableCell>
                       <TableCell className="flex items-center gap-x-2">
                         <Link href={`/viewsavedcode/${id}`}>
-                          <Button>View</Button>
+                          <Button className="md:w-16 w-12">View</Button>
                         </Link>
                         <FormContainer action={deleteCodeAction}>
                           <input readOnly name="id" hidden={true} value={id} />
-                          <Button type="submit">Delete</Button>
+                          <Button className="md:w-16 w-12" type="submit">
+                            Delete
+                          </Button>
                         </FormContainer>
                       </TableCell>
                     </TableRow>
