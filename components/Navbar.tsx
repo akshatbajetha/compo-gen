@@ -30,16 +30,18 @@ const Navbar = () => {
         </div>
         <div className="hidden md:flex space-x-5">
           <ToggleTheme />
+          <div className="hover:shadow-white/50">
           <HelpModal />
+          </div>
           <a
-            className="flex items-center"
+            className="flex items-center hover:shadow-white/50"
             href="https://github.com/akshatbajetha/compo-gen"
             target="_blank"
           >
             <Github className="w-6 h-6" />
           </a>
           <a
-            className="flex items-center"
+            className="flex items-center hover:shadow-white/50"
             href="https://x.com/akshatbajetha/"
             target="_blank"
           >
