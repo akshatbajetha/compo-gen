@@ -63,7 +63,7 @@ export function ButtonBorder({
 
       <div
         className={cn(
-          "relative bg-foreground backdrop-blur-xl text-background flex items-center justify-center w-full h-full text-sm antialiased",
+          "relative bg-foreground dark:bg-black dark:text-white backdrop-blur-xl text-background flex items-center justify-center w-full h-full text-sm antialiased",
           className
         )}
         style={{

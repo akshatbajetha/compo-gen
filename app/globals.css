@@ -10,6 +10,14 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .search-form {
+    @apply max-w-3xl w-full min-h-[80px] bg-white border-[5px] border-black rounded-[80px] text-[24px] mt-8 px-5 flex flex-row items-center gap-5;
+  }
+
+  .search-input {
+    @apply flex-1 font-medium text-sm bg-white dark:text-black placeholder:font-medium placeholder:text-black w-full h-auto outline-none;
+  }
+
 }
 
 @layer base {
