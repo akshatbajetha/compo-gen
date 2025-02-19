@@ -96,24 +96,33 @@ const Page = () => {
       text: "Generating...",
     },
   ];
+  const errorMsg = [
+    {
+      text: "Please provide a valid prompt...",
+    },
+  ];
 
   return (
-    <div className="flex flex-col overflow-x-hidden">
-      <div className="flex flex-col min-h-screen h-max overflow-hidden mt-16 w-screen">
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <HeroHighlight containerClassName="flex-1 w-full">
-            <div className="w-screen flex justify-center items-center ">
+    <div className='flex flex-col overflow-x-hidden'>
+      <div className='flex flex-col min-h-screen h-max overflow-hidden mt-16 w-screen'>
+        <div className='flex-1 flex flex-col items-center justify-center'>
+          <HeroHighlight containerClassName='flex-1 w-full'>
+            <div className='w-screen flex justify-center items-center '>
               {submitted ? (
-                <div className="py-12 flex justify-center items-center flex-col">
+                <div className='py-12 flex justify-center items-center flex-col'>
                   {loading ? (
-                    <div className="flex justify-center items-center h-full w-full">
+                    <div className='flex justify-center items-center h-full w-full'>
                       <TypewriterEffectSmooth duration={0.5} words={words} />
                     </div>
+                  ) : error ? (
+                    <div className='p-4 max-w-[1300px]'>
+                      <TypewriterEffectSmooth duration={0.4} words={errorMsg} />
+                    </div>
                   ) : (
-                    <div className="p-4 max-w-[1300px]">
-                      <div className="flex flex-row items-center justify-between">
+                    <div className='p-4 max-w-[1300px]'>
+                      <div className='flex flex-row items-center justify-between'>
                         {currentCode !== "" && error === false && (
-                          <div className="flex flex-row items-center gap-x-4 w-max m-4">
+                          <div className='flex flex-row items-center gap-x-4 w-max m-4'>
                             <SaveModal
                               prompt={prompt}
                               codeToSave={currentCode}
@@ -123,9 +132,9 @@ const Page = () => {
                                 currentCode
                               )}`}
                               download={`CustomComponent.jsx`}
-                              title="Download Code"
+                              title='Download Code'
                             >
-                              <Download className="w-6 h-6" />
+                              <Download className='w-6 h-6' />
                             </a>
                             {/* Copy Code button */}
                             <button
@@ -135,14 +144,14 @@ const Page = () => {
                                   title: "Code copied to clipboard",
                                 });
                               }}
-                              title="Copy Code"
+                              title='Copy Code'
                             >
-                              <Copy className="w-6 h-6" />
+                              <Copy className='w-6 h-6' />
                             </button>
                           </div>
                         )}
-                        <Link href="/savedcodes">
-                          <Button className="text-background bg-foreground hover:text-foreground hover:bg-background">
+                        <Link href='/savedcodes'>
+                          <Button className='text-background bg-foreground hover:text-foreground hover:bg-background'>
                             Saved Codes
                           </Button>
                         </Link>
@@ -150,7 +159,7 @@ const Page = () => {
 
                       <Sandpack
                         theme={theme === "dark" ? "dark" : "light"}
-                        template="react"
+                        template='react'
                         files={{
                           "/CustomComponent.jsx": {
                             code: error
@@ -178,28 +187,29 @@ const Page = () => {
                 <HeroSection />
               )}
             </div>
-            <div className="fixed md:bottom-16 bottom-10 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg rounded bg-background p-2 z-40">
+            <div className='fixed md:bottom-16 bottom-10 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg rounded bg-background p-2 z-40'>
               <form
                 onSubmit={handleSubmit}
-                className="flex flex-row items-center justify-center mb-1 w-full"
+                className='flex flex-row items-center justify-center mb-1 w-full'
               >
-                <Textarea
-                  name="prompt"
-                  className=" "
+                <input
+                  type='text'
+                  className='search-input'
+                  name='prompt'
                   placeholder={
                     submitted && !loading && currentCode !== ""
                       ? "Change the colour of the button to red OR Generate a hero section with title and subtitle"
                       : "Generate a hero section with title and subtitle"
                   }
                 />
-                <div className="flex md:flex-row md:items-center flex-col items-center gap-y-2">
+                <div className='flex md:flex-row md:items-center flex-col items-center gap-y-2'>
                   {!loading && currentCode !== "" && (
-                    <ButtonBorder name="action" value="update">
+                    <ButtonBorder name='action' value='update'>
                       Update
                     </ButtonBorder>
                   )}
                   {!loading && (
-                    <ButtonBorder name="action" value="generate">
+                    <ButtonBorder name='action' value='generate'>
                       Submit
                     </ButtonBorder>
                   )}
