@@ -6,7 +6,6 @@ import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { useTheme } from "next-themes";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
-import { Textarea } from "@/components/ui/textarea";
 import { Copy, Download } from "lucide-react";
 import { SaveModal } from "@/components/SaveModal";
 import Link from "next/link";
