@@ -189,7 +189,7 @@ const Page = () => {
             <div className='fixed md:bottom-16 bottom-10 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg rounded bg-background p-2 z-40'>
               <form
                 onSubmit={handleSubmit}
-                className='flex flex-row items-center justify-center mb-1 w-full'
+                className='flex flex-row items-center justify-center mb-1 w-full search-form'
               >
                 <input
                   type='text'
