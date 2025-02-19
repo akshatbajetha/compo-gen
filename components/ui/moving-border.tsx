@@ -34,7 +34,7 @@ export function ButtonBorder({
 } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      type='submit'
+      type="submit"
       name={name}
       value={value}
       disabled={disabled}
@@ -48,10 +48,10 @@ export function ButtonBorder({
       {...otherProps}
     >
       <div
-        className='absolute inset-0'
+        className="absolute inset-0"
         style={{ borderRadius: `calc(${borderRadius} * 0.96)` }}
       >
-        <MovingBorder duration={duration} rx='30%' ry='30%'>
+        <MovingBorder duration={duration} rx="30%" ry="30%">
           <div
             className={cn(
               "h-20 w-20 opacity-[1] bg-[radial-gradient(var(--sky-500)_40%,transparent_60%)]",
@@ -63,7 +63,7 @@ export function ButtonBorder({
 
       <div
         className={cn(
-          "relative bg-foreground dark:bg-black dark:text-white backdrop-blur-xl text-background flex items-center justify-center w-full h-full text-sm antialiased",
+          "relative bg-background backdrop-blur-xl text-foreground flex items-center justify-center w-full h-full text-sm antialiased",
           className
         )}
         style={{
