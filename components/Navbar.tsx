@@ -33,13 +33,18 @@ const Navbar = () => {
         <div className="hidden md:flex space-x-5">
           <ToggleTheme />
           <HelpModal />
-          <Link href="/generate" className="flex items-center" title="Generate">
+          <Link
+            href="/generate"
+            className="flex items-center"
+            aria-label="Generate Page"
+          >
             <Zap />
           </Link>
           <a
             className="flex items-center"
             href="https://github.com/akshatbajetha/compo-gen"
             target="_blank"
+            aria-label="Github Link"
           >
             <Github className="w-6 h-6" />
           </a>
@@ -47,12 +52,17 @@ const Navbar = () => {
             className="flex items-center"
             href="https://x.com/akshatbajetha/"
             target="_blank"
+            aria-label="Twitter Link"
           >
             <X className="w-6 h-6" />
           </a>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex max-w-[100px]">
+              <Button
+                variant="outline"
+                className="flex max-w-[100px]"
+                aria-label="User Icon"
+              >
                 <UserIcon />
               </Button>
             </DropdownMenuTrigger>

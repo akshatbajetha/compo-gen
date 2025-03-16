@@ -12,9 +12,9 @@ function LandingHero() {
             CompoGen
           </h1>
         </div>
-        <h3 className="md:pt-14 pt-5 md:text-3xl text-lg text-gray-800 dark:text-gray-300">
+        <h2 className="md:pt-14 pt-5 md:text-3xl text-lg text-gray-800 dark:text-gray-300">
           Generate and preview React components quickly and easily.
-        </h3>
+        </h2>
         <Link href="/generate">
           <Button className="px-8 py-4 rounded-md text-center text-lg font-bold relative overflow-hidden flex justify-center group/modal-btn md:mt-10 h-14 mt-5 bg-foreground">
             <span className="group-hover/modal-btn:-translate-x-40 text-center transition duration-500">

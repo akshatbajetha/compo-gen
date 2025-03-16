@@ -187,6 +187,9 @@ const Page = () => {
               onSubmit={handleSubmit}
               className="flex flex-row items-center justify-center mb-1 w-full search-form"
             >
+              <label htmlFor="prompt" className="sr-only">
+                Prompt
+              </label>
               <input
                 type="text"
                 className="search-input"
