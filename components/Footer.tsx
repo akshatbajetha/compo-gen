@@ -9,7 +9,7 @@ function Footer() {
       <div className="flex flex-col items-center justify-center md:px-24 px-5 py-3 bottom-0 w-full">
         <div className="flex flex-row justify-between w-full">
           <div className="flex items-center px-5">
-            <p className="md:text-base text-xs">Built by&nbsp;</p>
+            <p className="md:text-base text-xs">Built with ❤️ by&nbsp;</p>
             <span>
               <a
                 href="https://github.com/akshatbajetha"

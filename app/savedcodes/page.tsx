@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { deleteCodeAction, fetchSavedCodes } from "@/lib/actions";
+import { deleteCodeAction, fetchSavedCodes } from "@/utils/actions";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";

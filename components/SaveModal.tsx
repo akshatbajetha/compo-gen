@@ -8,7 +8,7 @@ import { Save } from "lucide-react";
 
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { saveCodeAction } from "@/lib/actions";
+import { saveCodeAction } from "@/utils/actions";
 import FormContainer from "./FormContainer";
 import { SignInButton, useAuth } from "@clerk/nextjs";
 
@@ -24,7 +24,10 @@ export function SaveModal({
     <div className="flex items-center justify-center" title="Save Code">
       {userId ? (
         <Modal>
-          <ModalTrigger className="flex justify-center group/modal-btn">
+          <ModalTrigger
+            title="Save Code"
+            className="flex justify-center group/modal-btn"
+          >
             <Save className="w-6 h-6" />
           </ModalTrigger>
           <ModalBody>

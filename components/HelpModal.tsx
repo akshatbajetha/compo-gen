@@ -18,7 +18,10 @@ export function HelpModal() {
   return (
     <div className="flex md:items-center md:justify-center">
       <Modal>
-        <ModalTrigger className="flex justify-center group/modal-btn">
+        <ModalTrigger
+          title="How to use"
+          className="flex justify-center group/modal-btn"
+        >
           <HelpCircle className="w-6 h-6" />
           <p className="md:hidden pl-2 font-semibold">How to use</p>
         </ModalTrigger>

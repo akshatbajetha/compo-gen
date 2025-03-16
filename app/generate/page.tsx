@@ -2,7 +2,6 @@
 import { ButtonBorder } from "@/components/ui/moving-border";
 import React, { FormEvent, useState } from "react";
 import HeroSection from "../../components/GenerateHero";
-import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { useTheme } from "next-themes";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
@@ -12,6 +11,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useCodeStore } from "@/store/codeStore";
 import { toast } from "@/hooks/use-toast";
+import { Particles } from "@/components/magicui/particles";
 
 const Page = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -105,119 +105,121 @@ const Page = () => {
     <div className="flex flex-col overflow-x-hidden">
       <div className="flex flex-col min-h-screen h-max overflow-hidden mt-16 w-screen">
         <div className="flex-1 flex flex-col items-center justify-center">
-          <HeroHighlight containerClassName="flex-1 w-full">
-            <div className="w-screen flex justify-center items-center ">
-              {submitted ? (
-                <div className="py-12 flex justify-center items-center flex-col">
-                  {loading ? (
-                    <div className="flex justify-center items-center h-full w-full">
-                      <TypewriterEffectSmooth duration={0.5} words={words} />
+          <div className="w-screen flex justify-center items-center ">
+            {submitted ? (
+              <div className="py-12 flex justify-center items-center flex-col">
+                {loading ? (
+                  <div className="flex justify-center items-center h-full w-full">
+                    <TypewriterEffectSmooth duration={0.5} words={words} />
+                  </div>
+                ) : error ? (
+                  <div className="p-4 max-w-[1300px]">
+                    <TypewriterEffectSmooth duration={0.4} words={errorMsg} />
+                  </div>
+                ) : (
+                  <div className="p-4 max-w-[1300px]">
+                    <div className="flex flex-row items-center justify-between">
+                      {currentCode !== "" && error === false && (
+                        <div className="flex flex-row items-center gap-x-4 w-max m-4">
+                          <SaveModal prompt={prompt} codeToSave={currentCode} />
+                          <a
+                            href={`data:text/javascript;charset=utf-8,${encodeURIComponent(
+                              currentCode
+                            )}`}
+                            download={`CustomComponent.jsx`}
+                            title="Download Code"
+                          >
+                            <Download className="w-6 h-6" />
+                          </a>
+                          {/* Copy Code button */}
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(currentCode);
+                              toast({
+                                title: "Code copied to clipboard",
+                              });
+                            }}
+                            title="Copy Code"
+                          >
+                            <Copy className="w-6 h-6" />
+                          </button>
+                        </div>
+                      )}
+                      <Link href="/savedcodes">
+                        <Button className="text-background bg-foreground hover:text-foreground hover:bg-background">
+                          Saved Codes
+                        </Button>
+                      </Link>
                     </div>
-                  ) : error ? (
-                    <div className="p-4 max-w-[1300px]">
-                      <TypewriterEffectSmooth duration={0.4} words={errorMsg} />
-                    </div>
-                  ) : (
-                    <div className="p-4 max-w-[1300px]">
-                      <div className="flex flex-row items-center justify-between">
-                        {currentCode !== "" && error === false && (
-                          <div className="flex flex-row items-center gap-x-4 w-max m-4">
-                            <SaveModal
-                              prompt={prompt}
-                              codeToSave={currentCode}
-                            />
-                            <a
-                              href={`data:text/javascript;charset=utf-8,${encodeURIComponent(
-                                currentCode
-                              )}`}
-                              download={`CustomComponent.jsx`}
-                              title="Download Code"
-                            >
-                              <Download className="w-6 h-6" />
-                            </a>
-                            {/* Copy Code button */}
-                            <button
-                              onClick={() => {
-                                navigator.clipboard.writeText(currentCode);
-                                toast({
-                                  title: "Code copied to clipboard",
-                                });
-                              }}
-                              title="Copy Code"
-                            >
-                              <Copy className="w-6 h-6" />
-                            </button>
-                          </div>
-                        )}
-                        <Link href="/savedcodes">
-                          <Button className="text-background bg-foreground hover:text-foreground hover:bg-background">
-                            Saved Codes
-                          </Button>
-                        </Link>
-                      </div>
 
-                      <Sandpack
-                        theme={theme === "dark" ? "dark" : "light"}
-                        template="react"
-                        files={{
-                          "/CustomComponent.jsx": {
-                            code: error
-                              ? "Error: Please provide a valid prompt"
-                              : currentCode,
-                            active: true,
-                          },
-                          "/App.js": {
-                            code: `import React from "react";\nimport CustomComponent from "./CustomComponent.jsx";\n\nexport default function App() {\n  return <CustomComponent />;\n
+                    <Sandpack
+                      theme={theme === "dark" ? "dark" : "light"}
+                      template="react"
+                      files={{
+                        "/CustomComponent.jsx": {
+                          code: error
+                            ? "Error: Please provide a valid prompt"
+                            : currentCode,
+                          active: true,
+                        },
+                        "/App.js": {
+                          code: `import React from "react";\nimport CustomComponent from "./CustomComponent.jsx";\n\nexport default function App() {\n  return <CustomComponent />;\n
 }`,
-                            hidden: true,
-                          },
-                        }}
-                        options={{
-                          externalResources: ["https://cdn.tailwindcss.com"],
-                          editorHeight: 600,
-                          wrapContent: true,
-                          showLineNumbers: true,
-                        }}
-                      />
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <HeroSection />
-              )}
-            </div>
-            <div className="fixed md:bottom-16 bottom-10 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg rounded bg-transparent p-2 z-40">
-              <form
-                onSubmit={handleSubmit}
-                className="flex flex-row items-center justify-center mb-1 w-full search-form"
-              >
-                <input
-                  type="text"
-                  className="search-input"
-                  name="prompt"
-                  placeholder={
-                    submitted && !loading && currentCode !== ""
-                      ? "Change the colour of the button to red OR Generate a hero section with title and subtitle"
-                      : "Generate a hero section with title and subtitle"
-                  }
-                />
-                <div className="flex md:flex-row md:items-center flex-col items-center gap-y-2">
-                  {!loading && currentCode !== "" && (
-                    <ButtonBorder name="action" value="update">
-                      Update
-                    </ButtonBorder>
-                  )}
-                  {!loading && (
-                    <ButtonBorder name="action" value="generate">
-                      Submit
-                    </ButtonBorder>
-                  )}
-                </div>
-              </form>
-            </div>
-          </HeroHighlight>
+                          hidden: true,
+                        },
+                      }}
+                      options={{
+                        externalResources: ["https://cdn.tailwindcss.com"],
+                        editorHeight: 600,
+                        wrapContent: true,
+                        showLineNumbers: true,
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            ) : (
+              <HeroSection />
+            )}
+          </div>
+          <div className="fixed md:bottom-16 bottom-10 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg rounded bg-transparent p-2 z-40">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-row items-center justify-center mb-1 w-full search-form"
+            >
+              <input
+                type="text"
+                className="search-input"
+                name="prompt"
+                placeholder={
+                  submitted && !loading && currentCode !== ""
+                    ? "Change the colour of the button to red OR Generate a hero section with title and subtitle"
+                    : "Generate a hero section with title and subtitle"
+                }
+              />
+              <div className="flex md:flex-row md:items-center flex-col items-center gap-y-2">
+                {!loading && currentCode !== "" && (
+                  <ButtonBorder name="action" value="update">
+                    Update
+                  </ButtonBorder>
+                )}
+                {!loading && (
+                  <ButtonBorder name="action" value="generate">
+                    Submit
+                  </ButtonBorder>
+                )}
+              </div>
+            </form>
+          </div>
         </div>
       </div>
+      <Particles
+        className="absolute inset-0 z-0"
+        quantity={100}
+        ease={80}
+        color={theme === "dark" ? "#ffffff" : "#000000"}
+        refresh
+      />
     </div>
   );
 };

@@ -42,9 +42,11 @@ export function Modal({ children }: { children: ReactNode }) {
 export const ModalTrigger = ({
   children,
   className,
+  title,
 }: {
   children: ReactNode;
   className?: string;
+  title: string;
 }) => {
   const { setOpen } = useModal();
   return (
@@ -53,6 +55,7 @@ export const ModalTrigger = ({
         " rounded-md text-black dark:text-white text-center relative overflow-hidden",
         className
       )}
+      title={title}
       onClick={() => setOpen(true)}
     >
       {children}
