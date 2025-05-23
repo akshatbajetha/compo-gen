@@ -173,6 +173,11 @@ const Page = () => {
                         editorHeight: 600,
                         wrapContent: true,
                         showLineNumbers: true,
+                        classes: {
+                          "sp-wrapper": `${theme === "dark" ? "bg-black" : "bg-white"} relative z-40`,
+                          "sp-layout": `${theme === "dark" ? "bg-black" : "bg-white"} relative z-40`,
+                          "sp-preview-container": `${theme === "dark" ? "bg-black" : "bg-white"} relative z-50`,
+                        },
                       }}
                     />
                   </div>
@@ -185,14 +190,14 @@ const Page = () => {
           <div className="fixed md:bottom-16 bottom-10 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg rounded bg-transparent p-2 z-40">
             <form
               onSubmit={handleSubmit}
-              className="flex flex-row items-center justify-center mb-1 w-full search-form"
+              className="flex flex-row items-center justify-center mb-1 w-full search-form z-50"
             >
               <label htmlFor="prompt" className="sr-only">
                 Prompt
               </label>
               <input
                 type="text"
-                className="search-input"
+                className="search-input placeholder:text-background/50 dark:placeholder:text-background/70"
                 name="prompt"
                 placeholder={
                   submitted && !loading && currentCode !== ""
