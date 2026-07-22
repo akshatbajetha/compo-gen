@@ -1,0 +1,13 @@
+{
+  "auth": {
+    "enabled": true,
+    "provider": "oidc",
+    "required_routes": [
+      "/*"
+    ],
+    "excluded_routes": [
+      "/healthz",
+      "/readyz"
+    ]
+  }
+}
